@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gostou da aula? Matricule-se na Fortaleza Cursos, Unidade Vila da Penha</title>
+<style>
+:root{--navy:#0a1b3d;--blue:#2f6bff;--sun:#ffd23f;--ice:#eef3ff;--ink:#14213d;--line:#c9d5ee;--bad:#b3261e}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:"Atkinson Hyperlegible","Segoe UI",Arial,sans-serif;color:var(--ink);background:#fff;line-height:1.55;font-size:18px}
+.wrap{max-width:720px;margin:0 auto;padding:0 20px}
+.hero{background:var(--navy);color:#fff;padding:34px 0 44px}
+.marca{font-weight:700;font-size:1.02rem;display:inline-block;padding:6px 12px;border:2px solid var(--sun);border-radius:6px;color:var(--sun)}
+h1{font-size:clamp(2.1rem,9vw,3.3rem);line-height:1.05;margin:24px 0 14px;letter-spacing:-.02em}
+h1 span{background:var(--sun);color:var(--navy);padding:0 .15em;border-radius:6px}
+.sub{font-size:1.15rem;max-width:38ch;color:#dbe5ff;margin:0}
+section{padding:36px 0}
+h2{font-size:1.5rem;line-height:1.15;margin:0 0 14px}
+.feito{display:grid;gap:8px;padding:0;margin:0;list-style:none}
+.feito li::before{content:"✓ ";color:#12803f;font-weight:700}
+.dor{background:var(--ice);padding:36px 0}
+.dor p{font-size:1.1rem}
+.dor .virada{border-left:6px solid var(--sun);padding-left:14px;font-weight:700;margin-top:18px}
+.cursos{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.curso{border:2px solid var(--navy);border-radius:10px;padding:14px 16px}
+.curso b{font-size:1.1rem;display:block}
+.curso small{display:block;margin-top:6px;color:#44546a;font-size:.92rem}
+.oferta{display:none;background:var(--sun);color:var(--navy);font-weight:700;border-radius:10px;padding:14px 16px;margin-top:18px}
+.passos{background:var(--ice);padding:34px 0}
+.passos ol{margin:0;padding-left:1.2em}
+.passos li{margin-bottom:8px}
+form{background:#fff;border:2px solid var(--navy);border-radius:12px;padding:22px 20px;box-shadow:0 8px 0 var(--sun)}
+label{display:block;font-weight:700;margin:14px 0 6px}
+input,select{width:100%;font:inherit;padding:13px 12px;border:2px solid var(--line);border-radius:8px;background:#fff;color:var(--ink)}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+button{width:100%;margin-top:20px;font:inherit;font-weight:700;font-size:1.1rem;padding:15px;border:0;border-radius:8px;background:var(--navy);color:#fff;cursor:pointer}
+button:hover{background:#13306b}
+.link{display:block;text-align:center;margin-top:16px;font-weight:700;color:var(--blue)}
+.erro{color:var(--bad);font-weight:700;margin:10px 0 0;min-height:1.4em}
+.nota{font-size:.95rem;color:#44546a;margin:10px 0 0}
+footer{padding:22px 0;font-size:.92rem;color:#44546a}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="wrap">
+    <span class="marca">Fortaleza Cursos · Unidade Vila da Penha</span>
+    <h1>Você viu como é. <span>Agora, vamos falar da sua matrícula.</span></h1>
+    <p class="sub">Em dois encontros na escola você criou sua planilha e entendeu para onde vai o seu dinheiro. Imagine o que dá para fazer em um curso completo.</p>
+  </div>
+</header>
+
+<section class="dor">
+  <div class="wrap">
+    <h2>Hoje, saber o básico de informática abre portas</h2>
+    <p>Muitas vagas pedem Excel, Word e internet já na seleção. Quem chega sem isso perde a chance, mesmo sendo esforçado. E aprender sozinho, sem ninguém para tirar a dúvida, trava e desanima. Não é falta de capacidade, é falta de um caminho.</p>
+    <p class="virada">E aprender não precisa ser chato. Foi o que você viu nas duas aulas: mexer no programa, errar, corrigir e ver o resultado aparecer. É assim que nasce a intimidade com o computador.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>O que você já sabe fazer</h2>
+    <ul class="feito">
+      <li>Montar uma tabela de entradas e despesas</li>
+      <li>Calcular o saldo do mês com fórmulas</li>
+      <li>Criar um gráfico para enxergar seus gastos</li>
+      <li>Reaproveitar a mesma planilha todo mês</li>
+    </ul>
+    <div class="oferta" id="oferta"></div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Continue de onde você parou</h2>
+    <p>O curso leva o que você sentiu nas aulas para o próximo nível, no seu ritmo e com a equipe ao seu lado.</p>
+    <div class="cursos" id="cursosLista"></div>
+  </div>
+</section>
+
+<div class="passos">
+  <div class="wrap">
+    <h2>Como é a matrícula</h2>
+    <ol>
+      <li>Você escolhe abaixo quando prefere conversar.</li>
+      <li>Confirmamos pelo WhatsApp.</li>
+      <li>A equipe explica o curso que combina com o seu objetivo, os horários e as condições.</li>
+      <li>Conversar não obriga a se matricular.</li>
+    </ol>
+  </div>
+</div>
+
+<section>
+  <div class="wrap">
+    <h2>Fale com a equipe sobre a matrícula</h2>
+    <form id="form" novalidate>
+      <label for="nome">Seu nome</label>
+      <input id="nome" autocomplete="name" required>
+      <label for="curso">Qual curso te interessa?</label>
+      <select id="curso"></select>
+      <label for="dia">Melhor dia e horário para conversar</label>
+      <select id="dia" required></select>
+      <button type="submit">Quero falar sobre a matrícula</button>
+      <p class="erro" id="erro" role="alert"></p>
+      <p class="nota">Ao tocar no botão, o WhatsApp abre com a mensagem pronta. É só enviar.</p>
+    </form>
+    <a class="link" id="duvidas" href="#">Prefiro tirar dúvidas pelo WhatsApp primeiro</a>
+  </div>
+</section>
+
+<footer class="wrap">Fortaleza Cursos · Unidade Vila da Penha</footer>
+
+<script>
+/* ===== EDITE AQUI ===== */
+const CONFIG = {
+  whatsapp: "5521968052157", /* só números: 55 + DDD + número da escola */
+  cursos: [ /* cursos da escola */
+    { nome: "Pacote Office Completo", info: "Word, Excel e PowerPoint em um só curso." },
+    { nome: "Pacote Office Completo com Power BI", info: "Word, Excel e PowerPoint, mais Power BI para transformar dados em painéis." },
+    { nome: "Excel completo", info: "Três níveis: essencial, intermediário e avançado." }
+  ],
+
+  visitas: ["Nos próximos dias, de manhã", "Nos próximos dias, à tarde", "Nos próximos dias, à noite"], /* períodos em que a equipe pode conversar; a equipe confirma o horário pelo WhatsApp */
+  oferta: "" /* opcional: condição para quem fez a aula. Se não houver, deixe vazio. */
+};
+/* ====================== */
+
+const $ = id => document.getElementById(id);
+$("curso").innerHTML = CONFIG.cursos.map(c => "<option>" + c.nome + "</option>").join("") + "<option>Outro (conversar com a equipe)</option>";
+$("cursosLista").innerHTML = CONFIG.cursos.map(c => '<div class="curso"><b>' + c.nome + "</b><small>" + c.info + "</small></div>").join("");
+$("dia").innerHTML = '<option value="">Escolha uma opção</option>' + CONFIG.visitas.map(v => "<option>" + v + "</option>").join("");
+if (CONFIG.oferta) { $("oferta").textContent = CONFIG.oferta; $("oferta").style.display = "block"; }
+
+const abrir = txt => window.location.href = "https://wa.me/" + CONFIG.whatsapp + "?text=" + encodeURIComponent(txt);
+
+$("form").addEventListener("submit", function (e) {
+  e.preventDefault();
+  const nome = $("nome").value.trim();
+  if (!nome) { $("erro").textContent = "Digite seu nome."; $("nome").focus(); return; }
+  if (!$("dia").value) { $("erro").textContent = "Escolha um dia e horário."; $("dia").focus(); return; }
+  $("erro").textContent = "";
+  abrir("Olá! Me interessei em fazer curso na Fortaleza Cursos, Unidade Vila da Penha por causa da experiência nas aulas de Excel financeiro. Quero saber como funciona a matrícula.\n" +
+    "Nome: " + nome + "\nCurso de interesse: " + $("curso").value + "\nMelhor horário: " + $("dia").value);
+});
+$("duvidas").addEventListener("click", function (e) {
+  e.preventDefault();
+  abrir("Olá! Fiz a aula de Excel financeiro e me interessei em fazer curso na Fortaleza Cursos, Unidade Vila da Penha. Quero tirar algumas dúvidas.");
+});
+</script>
+</body>
+</html>
