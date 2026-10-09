@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Minha planilha de gastos | Fortaleza Cursos</title>
+<style>
+:root{--navy:#0a1b3d;--blue:#2f6bff;--sun:#ffd23f;--ice:#eef3ff;--ink:#14213d;--line:#c9d5ee}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI",Arial,sans-serif;color:var(--ink);background:#fff;line-height:1.5;font-size:17px}
+.wrap{max-width:640px;margin:0 auto;padding:0 16px 40px}
+header{background:var(--navy);color:#fff;padding:22px 0 26px}
+header .wrap{padding-bottom:0}
+.marca{font-size:.85rem;font-weight:700;color:var(--sun);border:2px solid var(--sun);border-radius:6px;padding:3px 10px;display:inline-block}
+h1{font-size:1.9rem;line-height:1.1;margin:14px 0 6px}
+header p{margin:0;color:#dbe5ff}
+h2{font-size:1.2rem;margin:26px 0 10px}
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:-16px}
+.card{background:var(--ice);border-radius:10px;padding:10px 12px;text-align:center}
+.card small{display:block;font-size:.72rem;font-weight:700;letter-spacing:.04em;color:#44546a}
+.card b{font-size:1.25rem;color:var(--navy)}
+.saldo{grid-column:1/-1;padding:14px 12px;border-radius:10px;text-align:center;font-weight:700;background:#0b2a6f;color:var(--sun)}
+.saldo small{color:var(--sun);opacity:.85}
+.saldo b{font-size:1.9rem;color:var(--sun)}
+.saldo.neg{background:#7f1d1d}
+.msg{margin:12px 0 0;padding:12px 14px;border-left:6px solid var(--sun);background:var(--ice);border-radius:6px;font-weight:600}
+form{background:#fff;border:2px solid var(--navy);border-radius:12px;padding:14px;box-shadow:0 6px 0 var(--sun)}
+label{display:block;font-weight:700;margin:10px 0 4px;font-size:.95rem}
+input,select{width:100%;font:inherit;padding:11px 10px;border:2px solid var(--line);border-radius:8px;background:#fff;color:var(--ink)}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tipo{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:4px}
+.tipo button{margin:0;padding:11px;font-size:1rem;background:#fff;color:var(--navy);border:2px solid var(--navy)}
+.tipo button.on{background:var(--navy);color:var(--sun)}
+button{font:inherit;font-weight:700;cursor:pointer;border:0;border-radius:8px}
+.add{width:100%;margin-top:14px;padding:13px;background:var(--sun);color:var(--navy);font-size:1.05rem}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.erro{color:#b3261e;font-weight:700;min-height:1.3em;margin:8px 0 0;font-size:.95rem}
+ul.lista{list-style:none;padding:0;margin:0}
+.lista li{display:grid;grid-template-columns:1fr auto auto;gap:8px;align-items:center;padding:9px 6px;border-bottom:1px solid var(--line)}
+.lista li small{display:block;color:#44546a}
+.v-in{color:#0b2a6f;font-weight:700}.v-out{color:#8b1a1a;font-weight:700}
+.del{background:transparent;color:#8b1a1a;font-size:1.1rem;padding:4px 10px;border:2px solid var(--line)}
+.barra{display:grid;grid-template-columns:96px 1fr 52px;gap:8px;align-items:center;margin-bottom:8px;font-size:.92rem}
+.trilho{background:#e6ecf8;border-radius:6px;height:22px;overflow:hidden}
+.fill{height:100%;background:var(--blue);width:0;transition:width .35s}
+.dica{font-size:.92rem;color:#44546a}
+.meta{background:var(--ice);border-radius:10px;padding:12px 14px}
+.prog{background:#fff;border:2px solid var(--line);border-radius:8px;height:18px;overflow:hidden;margin:8px 0}
+.prog div{height:100%;background:var(--navy);width:0;transition:width .35s}
+.acoes{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.acoes button{flex:1;padding:10px;background:#fff;color:var(--navy);border:2px solid var(--navy);min-width:140px}
+.cta{margin-top:30px;background:var(--navy);color:#fff;border-radius:12px;padding:18px}
+.cta p{margin:0 0 12px}
+.cta a{display:block;text-align:center;background:var(--sun);color:var(--navy);font-weight:700;text-decoration:none;padding:13px;border-radius:8px}
+@media (prefers-reduced-motion:reduce){.fill,.prog div{transition:none}}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <span class="marca">Fortaleza Cursos · Unidade Vila da Penha</span>
+    <h1>Minha planilha de gastos</h1>
+    <p>Anote o que entra e o que sai e veja o gráfico na hora. Sem instalar nada.</p>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="cards">
+    <div class="card"><small>ENTRADAS</small><b id="tEnt">R$ 0,00</b></div>
+    <div class="card"><small>SAÍDAS</small><b id="tSai">R$ 0,00</b></div>
+    <div class="saldo" id="saldoBox"><small>SALDO DO MÊS</small><br><b id="tSaldo">R$ 0,00</b></div>
+  </div>
+  <p class="msg" id="msg"></p>
+
+  <h2>Adicionar lançamento</h2>
+  <form id="form" novalidate>
+    <label for="desc">O que foi?</label>
+    <input id="desc" maxlength="40" placeholder="Ex.: Supermercado" autocomplete="off">
+    <div class="row2">
+      <div><label for="valor">Valor (R$)</label><input id="valor" inputmode="decimal" placeholder="Ex.: 120,50" autocomplete="off"></div>
+      <div id="catBox"><label for="cat">Categoria</label><select id="cat"></select></div>
+    </div>
+    <label>Tipo</label>
+    <div class="tipo">
+      <button type="button" id="bSai" class="on">Saída (gastei)</button>
+      <button type="button" id="bEnt">Entrada (recebi)</button>
+    </div>
+    <button class="add" type="submit">Adicionar</button>
+    <p class="erro" id="erro" role="alert"></p>
+  </form>
+
+  <h2>Meus lançamentos</h2>
+  <ul class="lista" id="lista"></ul>
+
+  <h2>Para onde foi o dinheiro</h2>
+  <div id="grafico"></div>
+
+  <h2>Desafio: guardar dinheiro</h2>
+  <div class="meta">
+    <label for="metaSel" style="margin-top:0">Quanto você quer guardar do que entra?</label>
+    <select id="metaSel"><option value="5">5%</option><option value="10" selected>10%</option><option value="15">15%</option><option value="20">20%</option></select>
+    <div class="prog"><div id="prog"></div></div>
+    <div id="metaTxt" class="dica"></div>
+  </div>
+
+  <div class="acoes">
+    <button type="button" id="limpar">Limpar os exemplos</button>
+    <button type="button" id="restaurar">Voltar aos exemplos</button>
+  </div>
+  <p class="dica" style="margin-top:12px">Os seus dados ficam só neste aparelho. Nada é enviado para ninguém.</p>
+
+  <div class="cta">
+    <p><b>Gostou?</b> No curso você aprende a montar uma planilha como esta no Excel, com alguém do lado para ajudar.</p>
+    <a id="zap" href="#">Quero saber mais pelo WhatsApp</a>
+  </div>
+</main>
+
+<script>
+const WHATSAPP = "5521968052157";
+const CATS = ["Moradia","Alimentação","Transporte","Lazer","Saúde","Educação","Outros"];
+const KEY = "planilha_fortaleza_v1";
+const EXEMPLOS = [
+  {desc:"Salário",cat:"Renda",val:2500,tipo:"E"},
+  {desc:"Aluguel",cat:"Moradia",val:800,tipo:"S"},
+  {desc:"Supermercado",cat:"Alimentação",val:420,tipo:"S"},
+  {desc:"Passagens",cat:"Transporte",val:150,tipo:"S"},
+  {desc:"Cinema",cat:"Lazer",val:60,tipo:"S"},
+  {desc:"Mercado",cat:"Alimentação",val:280,tipo:"S"},
+  {desc:"Conta de luz",cat:"Moradia",val:120,tipo:"S"},
+  {desc:"Farmácia",cat:"Outros",val:45,tipo:"S"}
+];
+const $ = id => document.getElementById(id);
+const brl = v => v.toLocaleString("pt-BR",{style:"currency",currency:"BRL"});
+let itens = [], tipo = "S", meta = 10, nextId = 1;
+
+function salvar(){ try{ localStorage.setItem(KEY, JSON.stringify({itens, meta})); }catch(e){} }
+function carregar(){
+  try{
+    const d = JSON.parse(localStorage.getItem(KEY) || "null");
+    if (d && Array.isArray(d.itens)) { itens = d.itens; meta = d.meta || 10; return; }
+  }catch(e){}
+  itens = EXEMPLOS.map(x => Object.assign({}, x));
+}
+function ids(){ itens.forEach(i => { if(!i.id) i.id = nextId++; }); nextId = Math.max(nextId, ...itens.map(i=>i.id||0)) + 1; }
+
+function render(){
+  ids();
+  const ent = itens.filter(i=>i.tipo==="E").reduce((a,i)=>a+i.val,0);
+  const sai = itens.filter(i=>i.tipo==="S").reduce((a,i)=>a+i.val,0);
+  const saldo = ent - sai;
+  $("tEnt").textContent = brl(ent); $("tSai").textContent = brl(sai); $("tSaldo").textContent = brl(saldo);
+  $("saldoBox").className = "saldo" + (saldo < 0 ? " neg" : "");
+
+  // mensagem
+  const porCat = {}; CATS.forEach(c => porCat[c] = 0);
+  itens.filter(i=>i.tipo==="S").forEach(i => { porCat[CATS.includes(i.cat)?i.cat:"Outros"] += i.val; });
+  const maior = CATS.reduce((m,c)=> porCat[c] > porCat[m] ? c : m, CATS[0]);
+  let m;
+  if (!itens.length) m = "Adicione o seu primeiro lançamento para começar.";
+  else if (saldo < 0) m = "Atenção: você gastou " + brl(-saldo) + " a mais do que entrou. A maior parte foi para " + maior + ".";
+  else if (saldo === 0) m = "Você gastou exatamente o que entrou. Que tal tentar sobrar um pouco?";
+  else m = "Você está no azul! Sobram " + brl(saldo) + " neste mês.";
+  $("msg").textContent = m;
+
+  // lista
+  const ul = $("lista"); ul.textContent = "";
+  if (!itens.length) { const li = document.createElement("li"); li.textContent = "Nenhum lançamento ainda."; ul.appendChild(li); }
+  itens.forEach(i => {
+    const li = document.createElement("li");
+    const d = document.createElement("div"); d.textContent = i.desc;
+    const s = document.createElement("small"); s.textContent = i.cat; d.appendChild(s);
+    const v = document.createElement("span"); v.className = i.tipo==="E" ? "v-in" : "v-out";
+    v.textContent = (i.tipo==="E" ? "+ " : "- ") + brl(i.val);
+    const b = document.createElement("button"); b.className = "del"; b.type = "button"; b.textContent = "✕"; b.setAttribute("aria-label","Apagar " + i.desc);
+    b.addEventListener("click", () => { itens = itens.filter(x => x.id !== i.id); salvar(); render(); });
+    li.append(d, v, b); ul.appendChild(li);
+  });
+
+  // gráfico
+  const g = $("grafico"); g.textContent = "";
+  const maxV = Math.max(1, ...CATS.map(c => porCat[c]));
+  CATS.forEach(c => {
+    const row = document.createElement("div"); row.className = "barra";
+    const n = document.createElement("span"); n.textContent = c;
+    const t = document.createElement("div"); t.className = "trilho";
+    const f = document.createElement("div"); f.className = "fill"; t.appendChild(f);
+    const p = document.createElement("span"); p.textContent = sai ? Math.round(porCat[c]/sai*100) + "%" : "0%";
+    row.append(n, t, p); g.appendChild(row);
+    requestAnimationFrame(() => { f.style.width = (porCat[c]/maxV*100) + "%"; });
+  });
+  if (sai) { const dica = document.createElement("p"); dica.className = "dica"; dica.textContent = "A maior fatia é " + maior + ": " + brl(porCat[maior]) + "."; g.appendChild(dica); }
+
+  // desafio
+  const alvo = ent * meta / 100;
+  const pct = alvo > 0 ? Math.max(0, Math.min(100, saldo/alvo*100)) : 0;
+  $("prog").style.width = pct + "%";
+  let mt;
+  if (ent <= 0) mt = "Adicione uma entrada (salário, por exemplo) para ver o desafio.";
+  else if (saldo >= alvo) mt = "Desafio cumprido! Você guardaria " + brl(saldo) + ", mais do que os " + meta + "% (" + brl(alvo) + ").";
+  else mt = "Para guardar " + meta + "% (" + brl(alvo) + "), faltam " + brl(alvo - Math.max(saldo,0)) + ". Veja se dá para cortar em " + maior + ".";
+  $("metaTxt").textContent = mt;
+  $("metaSel").value = String(meta);
+}
+
+function setTipo(t){
+  tipo = t;
+  $("bSai").classList.toggle("on", t==="S"); $("bEnt").classList.toggle("on", t==="E");
+  $("catBox").style.display = t==="S" ? "" : "none";
+}
+$("bSai").addEventListener("click", () => setTipo("S"));
+$("bEnt").addEventListener("click", () => setTipo("E"));
+$("cat").innerHTML = CATS.map(c => "<option>" + c + "</option>").join("");
+
+$("form").addEventListener("submit", e => {
+  e.preventDefault();
+  const desc = $("desc").value.trim();
+  const val = parseFloat($("valor").value.replace(/\./g,"").replace(",","."));
+  const erro = $("erro");
+  if (!desc) { erro.textContent = "Escreva o que foi."; $("desc").focus(); return; }
+  if (!(val > 0)) { erro.textContent = "Digite um valor maior que zero, como 120,50."; $("valor").focus(); return; }
+  erro.textContent = "";
+  itens.push({id: nextId++, desc, val, tipo, cat: tipo==="E" ? "Renda" : $("cat").value});
+  $("desc").value = ""; $("valor").value = "";
+  salvar(); render(); $("desc").focus();
+});
+$("metaSel").addEventListener("change", e => { meta = parseInt(e.target.value,10); salvar(); render(); });
+$("limpar").addEventListener("click", () => { itens = []; salvar(); render(); });
+$("restaurar").addEventListener("click", () => { itens = EXEMPLOS.map(x => Object.assign({}, x)); salvar(); render(); });
+$("zap").href = "https://wa.me/" + WHATSAPP + "?text=" + encodeURIComponent("Olá! Usei a planilha de gastos da Fortaleza Cursos, Unidade Vila da Penha, e quero saber mais sobre o curso.");
+
+carregar(); setTipo("S"); render();
+</script>
+</body>
+</html>
